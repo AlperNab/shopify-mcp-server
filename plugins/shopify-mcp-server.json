@@ -1,0 +1,366 @@
+{
+  "slug": "shopify-mcp-server",
+  "name": "Shopify Mcp Server",
+  "domain": "E-commerce / Shopify Ops",
+  "target_user": "Domain operator, business owner, analyst, or team member who needs this workflow executed reliably.",
+  "core_job": "MCP tools → Shopify store operations",
+  "deep_features": [
+    "bulk product ops",
+    "inventory checks",
+    "discount workflows",
+    "customer segments",
+    "abandoned cart insights",
+    "approval gates",
+    "audit logs",
+    "analytics questions"
+  ],
+  "input_schema": [
+    {
+      "key": "mcp_tools",
+      "label": "MCP tools",
+      "type": "text",
+      "required": true,
+      "help": "Affects input: MCP tools.",
+      "affects": [
+        "prompt",
+        "workflow"
+      ],
+      "default": ""
+    },
+    {
+      "key": "work_brief",
+      "label": "Work brief / source text / URL / instructions",
+      "type": "textarea",
+      "required": true,
+      "default": "",
+      "help": "Paste the material, URL, description, or instruction needed for this project.",
+      "affects": [
+        "prompt",
+        "workflow"
+      ]
+    }
+  ],
+  "customization_schema": [
+    {
+      "key": "execution_mode",
+      "label": "Execution mode",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Draft",
+        "Production",
+        "Audit / strict review",
+        "JSON/API output"
+      ],
+      "default": "Production",
+      "help": "Controls strictness, depth, and output format for this project workflow.",
+      "affects": [
+        "workflow",
+        "validation",
+        "export"
+      ]
+    },
+    {
+      "key": "store",
+      "label": "store",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: store.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "scopes",
+      "label": "scopes",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: scopes.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "allowed_actions",
+      "label": "allowed actions",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: allowed actions.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "approval_rules",
+      "label": "approval rules",
+      "type": "textarea",
+      "required": false,
+      "help": "Affects customization: approval rules.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "rate_limits",
+      "label": "rate limits",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: rate limits.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "product_fields",
+      "label": "product fields",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: product fields.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "risk_policy",
+      "label": "risk policy",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: risk policy.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "output_format",
+      "label": "output format",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: output format.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "Markdown",
+        "JSON",
+        "CSV",
+        "PDF",
+        "DOCX",
+        "XLSX"
+      ],
+      "default": "Markdown"
+    },
+    {
+      "key": "language",
+      "label": "language",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: language.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "English",
+        "Arabic",
+        "Egyptian Arabic",
+        "French",
+        "German",
+        "Spanish"
+      ],
+      "default": "English"
+    },
+    {
+      "key": "privacy_mode",
+      "label": "privacy mode",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: privacy mode.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "cloud allowed",
+        "local only",
+        "redact sensitive data"
+      ],
+      "default": "cloud allowed"
+    },
+    {
+      "key": "confidence_threshold",
+      "label": "Confidence threshold",
+      "type": "slider",
+      "required": false,
+      "min": 0,
+      "max": 100,
+      "default": 75,
+      "help": "Items below this confidence are escalated to the human review queue.",
+      "affects": [
+        "validation",
+        "workflow",
+        "export"
+      ]
+    }
+  ],
+  "workflow_steps": [
+    "MCP tools",
+    "Shopify store operations"
+  ],
+  "ui_panels": [
+    "tool catalog",
+    "action runner",
+    "approval queue",
+    "product/customer dashboards",
+    "audit log"
+  ],
+  "output_formats": [
+    "MCP server config",
+    "action logs",
+    "CSV exports",
+    "store operation reports"
+  ],
+  "integrations": [
+    "File upload",
+    "REST API",
+    "Export download",
+    "Job history",
+    "Shopify Admin API required for live store actions"
+  ],
+  "guardrails": [
+    "Show uncertainty and confidence",
+    "Cite evidence from input when possible",
+    "Human review required for legal, medical, financial, hiring, or security decisions",
+    "Do not invent facts absent from input"
+  ],
+  "recommended_models": {
+    "drafting": "fast cloud or local instruct model",
+    "reasoning": "strong reasoning model",
+    "private_documents": "local model via Ollama/LM Studio/vLLM",
+    "vision_or_pdf": "vision-capable model when image pages are used"
+  },
+  "suite": "E-commerce Growth Suite",
+  "implementation_status": "real_local_engine_registered",
+  "analysis_modules": [
+    "shopify_action_plan",
+    "approval_policy",
+    "mcp_tool_parse"
+  ],
+  "output_sections": [
+    "Action plan",
+    "Risk gates",
+    "Tool schema",
+    "API setup checklist"
+  ],
+  "field_validations": [
+    {
+      "field": "risk_policy",
+      "rule": "Use selected risk tolerance to adjust severity labels and escalation threshold."
+    },
+    {
+      "field": "language",
+      "rule": "Preserve requested language in final deliverable unless source text requires bilingual output."
+    }
+  ],
+  "scorecards": [
+    "Audience fit",
+    "Offer clarity",
+    "Platform fit",
+    "Compliance risk",
+    "Conversion readiness"
+  ],
+  "automation_hooks": [
+    {
+      "name": "save_job_snapshot",
+      "type": "internal",
+      "description": "Persist inputs, customization, uploads, output, and usage for audit/history."
+    },
+    {
+      "name": "export_pack",
+      "type": "internal",
+      "description": "Export Markdown, JSON, PDF, and DOCX from the completed job."
+    },
+    {
+      "name": "human_review_queue",
+      "type": "manual",
+      "description": "Flag low-confidence, legal/medical/finance/security/compliance-sensitive items for human review."
+    }
+  ],
+  "ux_profile": {
+    "name": "Growth Command Center",
+    "accent": "#a3e635",
+    "layout": "Research → positioning → content/ads → launch queue → measurement",
+    "hero": "Commerce-first workspace for products, offers, creative angles, listings, Shopify actions, and launch assets.",
+    "components": [
+      "Shopify tool cards",
+      "Product/inventory grid",
+      "Order/customer action queue",
+      "Approval gates",
+      "Audit log"
+    ],
+    "metrics": [
+      "Offer strength",
+      "Margin readiness",
+      "Channel fit",
+      "Launch completeness"
+    ],
+    "quick_actions": [
+      "Check product ops",
+      "Prepare inventory actions",
+      "Create safe approval queue",
+      "Generate store ops report"
+    ],
+    "review_lanes": [
+      "Research",
+      "Position",
+      "Create",
+      "Approve",
+      "Launch"
+    ],
+    "empty_state": "Enter a product, offer, audience, or store task. External Shopify/marketplace actions require real credentials.",
+    "icon": "🛒",
+    "project_slug": "shopify-mcp-server",
+    "domain": "E-commerce / Shopify Ops"
+  },
+  "final_gui_status": {
+    "standalone_folder_gui": true,
+    "domain_specific_ux_profile": true,
+    "elegant_component_system": true,
+    "no_fake_live_data_policy": true,
+    "requires_real_connectors_for_external_actions": true
+  }
+}
