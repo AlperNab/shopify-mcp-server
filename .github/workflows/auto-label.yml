@@ -1,0 +1,75 @@
+name: Auto-label Issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label by content
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const title = context.payload.issue.title.toLowerCase();
+            const body  = (context.payload.issue.body || '').toLowerCase();
+            const text  = title + ' ' + body;
+            const labels = [];
+
+            // Bug detection
+            if (/\b(bug|error|crash|fail|broken|exception|traceback|not work)\b/.test(text))
+              labels.push('bug');
+
+            // Feature request
+            if (/\b(feature|request|suggestion|would be nice|add support|please add|enhancement)\b/.test(text))
+              labels.push('enhancement');
+
+            // Question / help
+            if (/\b(how to|how do|question|help|confused|not sure|clarif|documentation|docs)\b/.test(text))
+              labels.push('question');
+
+            // Performance
+            if (/\b(slow|performance|speed|timeout|latency|memory|cpu)\b/.test(text))
+              labels.push('performance');
+
+            // Security
+            if (/\b(security|vulnerability|cve|exploit|auth|token|secret|leak)\b/.test(text))
+              labels.push('security');
+
+            // Installation / setup
+            if (/\b(install|setup|config|environment|env|credentials)\b/.test(text))
+              labels.push('setup');
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                labels,
+              });
+            }
+
+      - name: Welcome first-time contributor
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const creator = context.payload.issue.user.login;
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              creator,
+              state: 'all',
+            });
+            
+            // First issue from this user
+            if (issues.data.length === 1) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                body: `👋 Thanks for opening your first issue here, @${creator}!\n\nI'll take a look shortly. In the meantime:\n- Make sure you've checked the [README](../../blob/main/README.md) for common setup issues\n- Include your Node/Python version and OS if this is a bug\n\nAppreciate the report!`,
+              });
+            }
