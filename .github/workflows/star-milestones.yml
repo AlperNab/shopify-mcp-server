@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Get star count
         id: stars
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const repo = await github.rest.repos.get({
@@ -21,7 +21,7 @@ jobs:
           result-encoding: string
 
       - name: Check milestone and celebrate
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
